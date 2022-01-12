@@ -35,12 +35,13 @@ def randChoice(shape: Type[shapeslib.baseShape], end: str) -> Optional[int]:
         if choice == x: print("You've already chosen that!")
     return int(choice == place)
 
-def run() -> authio.User:
+def run() -> Optional[authio.User]:
     uh, user = authio.UserHandler(), None # Initialize user handler and user variable
     
     # User chooses to login or register
     authFuncs = [uh.login, uh.reg]
-    authFunc = authFuncs[nChoice("Login", "Register") - 1]
+    try: authFunc = authFuncs[nChoice("Login", "Register", "Exit") - 1]
+    except IndexError: return None
     
     # Loop until valid login/registration
     while not isinstance(user, authio.User):
